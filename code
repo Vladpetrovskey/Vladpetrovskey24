@@ -1,0 +1,22 @@
+m4_define([_AX_BOOST_BASE_PROGRAM],
+          [AC_LANG_PROGRAM([[
+#include <boost/version.hpp>
+]],[[
+(void) ((void)sizeof(char[1 - 2*!!((BOOST_VERSION) < ($1))]));
+]])])
+
+AC_DEFUN([AX_BOOST_BASE],
+[
+AC_ARG_WITH([boost],
+  [AS_HELP_STRING([--with-boost@<:@=ARG@:>@],
+    [use Boost library from a standard location (ARG=yes),
+     from the specified location (ARG=<path>),
+     or disable it (ARG=no)
+     @<:@ARG=yes@:>@ ])],
+    [
+     AS_CASE([$withval],
+       [no],[want_boost="no";_AX_BOOST_BASE_boost_path=""],
+       [yes],[want_boost="yes";_AX_BOOST_BASE_boost_path=""],
+       [want_boost="yes";_AX_BOOST_BASE_boost_path="$withval"])
+    ],
+    [want_boost="yes"])
